@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from twython import Twython, TwythonError
-import feedparser
 import csv
 import datetime
 import os
@@ -9,14 +7,19 @@ import re
 import sys
 import time
 from datetime import date
+from os import environ
+
+import feedparser
+from twython import Twython, TwythonError
+
 
 class Settings:
 	"""
 	Twitter bot application settings.
-	
+
 	Enter the RSS feed you want to tweet, or keywords you want to retweet.
 	"""
-	FeedUrl = "http://example.net/feed/"               # RSS feed to read and post tweets from.
+	FeedUrl = environ['FEED_URL']                      # RSS feed to read and post tweets from.
 	PostedUrlsOutputFile = "posted-urls.log"           # Log file to save all tweeted RSS links (one URL per line).
 	PostedRetweetsOutputFile = "posted-retweets.log"   # Log file to save all retweeted tweets (one tweetid per line).
 	RetweetIncludeWords = ["#hashtag"]                 # Include tweets with these words when retweeting.
@@ -28,10 +31,10 @@ class TwitterAuth:
 
 	Create a Twitter app at https://apps.twitter.com/ and generate key, secret etc. and insert them here.
 	"""
-	ConsumerKey = "XXX"
-	ConsumerSecret = "XXX"
-	AccessToken = "XXX"
-	AccessTokenSecret = "XXX"
+	ConsumerKey = environ['CONSUMER_KEY']
+	ConsumerSecret = environ['CONSUMER_SECRET']
+	AccessToken = environ['ACCESS_KEY']
+	AccessTokenSecret = environ['ACCESS_SECRET']
 
 def compose_message(rss_item):
 	"""Compose a tweet from title, link, and description, and then return the final tweet message."""
@@ -84,7 +87,7 @@ def search_and_retweet(query, count=10):
 		if not is_in_logfile(tweet["id_str"], Settings.PostedRetweetsOutputFile):
 			try:
 				twitter.retweet(id = tweet["id_str"])
-				write_to_logfile(tweet["id_str"], Settings.PostedRetweetsOutputFile)				
+				write_to_logfile(tweet["id_str"], Settings.PostedRetweetsOutputFile)
 				print("Retweeted {} (id {})".format(shorten_text(tweet["text"], maxlength=40), tweet["id_str"]))
 			except TwythonError as e:
 				print(e)
@@ -99,7 +102,7 @@ def is_in_logfile(content, filename):
 		if (content + "\n" or content) in lines:
 			return True
 	return False
-	
+
 def write_to_logfile(content, filename):
 	"""Append content to log file, on one line."""
 	try:

@@ -1,0 +1,23 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "args": ["rss"],
+      "env": {
+        "FEED_URL": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/erss.cgi?rss_guid=14a2MZa9gZvfIYrxIIALlU0_ECLnTwAz3VvIGfgD6KmAtFFENZ",
+        "CONSUMER_KEY": "",
+        "CONSUMER_SECRET": "",
+        "ACCESS_KEY": "",
+        "ACCESS_SECRET": ""
+      },
+      "console": "integratedTerminal"
+    }
+  ]
+}

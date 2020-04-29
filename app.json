@@ -1,0 +1,7 @@
+{
+  "name": "Twitterbot",
+  "description": "Reads RSS feeds and post links to Twitter, also search for keywords and #hashtag to retweet",
+  "image": "heroku/python",
+  "repository": "https://github.com/robert-wettstaedt/twitterbot",
+  "keywords": ["python"]
+}
